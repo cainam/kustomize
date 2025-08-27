@@ -23,6 +23,7 @@ spec:
         app: {{ kustom.name }}
         istio: {{ kustom.name }}
         sidecar.istio.io/inject: "true"
+        gateway_type: "istio"
     spec:
       containers:
       - image: auto
