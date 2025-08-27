@@ -6,10 +6,6 @@ resources:
 - valhook.yaml
 - muthook.yaml
 
-
-#generators:
-  # load secret from file
- #. - my-tls-secret-extfile.yaml
 secretGenerator:
 - name: tls
   files:

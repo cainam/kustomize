@@ -6,8 +6,8 @@ webhooks:
   - name: v.a.l.i.d.a.t.e
     clientConfig:
       service:
-        namespace: kubext # The namespace where your FastAPI webhook service is running
-        name: valmut # The name of the Kubernetes Service exposing your webhook
+        namespace: {{ kustom.namespace }} # The namespace where your FastAPI webhook service is running
+        name: {{ valmut }} # The name of the Kubernetes Service exposing your webhook
         path: "/validate" # The path on your webhook server for validation requests (matching @app.post("/validate"))
       caBundle: |
         {{ caBundle }}
