@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: valmut
+  name: {{ kustom.name }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: valmut
+      app: {{ kustom.name }}
   template:
     metadata:
       labels:
-        app: valmut
+        app: {{ kustom.name }}
       annotations:
         redeploy-timestamp: "{{ lookup('pipe', 'date +%s') }}"
     spec:
       containers:
-      - name: valmut
+      - name: {{ kustom.name }}
         image: {{ kustom.image }}
         args:
         - valmut-webhook:app
@@ -36,18 +36,26 @@ spec:
         ports:
         - containerPort: {{ kustom.podPort }}
         volumeMounts:
+        - mountPath: /config
+          name: config
         - mountPath: /app
-          name: valmut
+          name: {{ kustom.name }}
         - name: tls-certs-volume
           mountPath: /certs
           readOnly: true
         workingDir: /app/
+      serviceAccountName: {{ kustom.name }}
       volumes:
-      - name: valmut
+      - configMap:
+          defaultMode: 420
+          name: {{ kustom.name }}
+        name: config
+      - name: {{ kustom.name }}
         persistentVolumeClaim:
-          claimName: valmut
+          claimName: {{ kustom.name }}
       - name: tls-certs-volume
         secret:
           secretName: my-tls-secret
           defaultMode: 0400
+
 

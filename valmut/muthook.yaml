@@ -23,7 +23,11 @@ webhooks:
       - operations: ["CREATE", "UPDATE"] # The operations this webhook applies to
         apiGroups: [""] # "" indicates core API group (e.g., Pods, Services, Deployments)
         apiVersions: ["v1"] # The API versions this webhook applies to
-        resources: ["pods"] # The resources this webhook applies to (e.g., "pods", "deployments")
+        resources: ["pods", "deployments"]
+      - operations: ["CREATE", "UPDATE"] # The operations this webhook applies to
+        apiGroups: ["apps"] # "" indicates core API group (e.g., Pods, Services, Deployments)
+        apiVersions: ["v1"]
+        resources: ["deployments"]
     failurePolicy: Ignore # How Kubernetes handles webhook failures:
                         # - Fail: Denies the request if the webhook fails or is unreachable (recommended for strict policies)
                         # - Ignore: Allows the request to proceed even if the webhook fails (useful for non-critical mutations/validations)

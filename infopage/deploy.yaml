@@ -53,7 +53,6 @@ spec:
         - mountPath: /app
           name: infopage
         workingDir: /app/backend
-      serviceAccount: {{ kustom.name }}
       serviceAccountName: {{ kustom.name }}
       volumes:
       - name: infopage
