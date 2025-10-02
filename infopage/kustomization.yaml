@@ -1,3 +1,4 @@
+namespace: {{ kustom.namespace }}
 resources:
 - clusterrolebinding.yaml
 - clusterrole.yaml
@@ -5,5 +6,10 @@ resources:
 - pvc.yaml
 - service.yaml
 - serviceaccount.yaml
-  
-namespace: {{ kustom.namespace }}
+
+patches:
+  - path: service-ports.yaml
+    target:
+      kind: Service
+      name: {{ kustom.name }}
+

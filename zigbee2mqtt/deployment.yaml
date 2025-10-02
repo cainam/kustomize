@@ -32,6 +32,8 @@ spec:
         securityContext:
           privileged: true
           readOnlyRootFilesystem: false
+          runAsUser: {{ kustom.security.runAsUser }}
+          runAsGroup: {{ kustom.security.runAsGroup }}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:

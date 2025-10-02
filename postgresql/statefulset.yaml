@@ -35,10 +35,6 @@ spec:
         env:
         - name: PGDATA
           value: {{ kustom.dataPath }}/data
-        - name: XXPOSTGRES_DB
-          value: mydb
-        - name: PGDATA
-          value: {{ kustom.dataPath }}/data
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
@@ -100,8 +96,8 @@ spec:
       name: data
     spec:
       accessModes: ["ReadWriteOnce"]
-      storageClassName: {{ kustom.storageClass }}
+      storageClassName: {{ kustom.storage[0].type }}
       resources:
         requests:
-          storage: {{ kustom.storage.size }}
+          storage: {{ kustom.storage[0].size }}
 

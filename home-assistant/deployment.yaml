@@ -18,26 +18,19 @@ spec:
     spec:
       automountServiceAccountToken: true
       containers:
-      - args:
-        - -m
-        - homeassistant
-        - --config
-        - /config
-        - --log-file
-        - /tmp/home-assistant.log
-        command:
-        - python
+      - name: {{ kustom.name }}
+        command: ["/bin/sh", "-c"]
+        args:
+        - "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/postgresql-17/lib && python -m homeassistant --config /config --log-file /tmp/home-assistant.log"
         env:
         - name: PYTHONPATH
-          value: /ha/core:/py_env/lib/python3.12/site-packages:/usr/lib/python3.12/site-packages
+          value: /ha/core
         - name: PATH
           value: /py_env/bin:/bin:/usr/bin
-        - name: TZ
+        - name: T
           value: UTC
-        - name: LD_LIBRARY_PATH
-          value: /usr/lib/postgresql-17/lib/
         image: {{ kustom.image }}
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
           periodSeconds: 10
@@ -45,7 +38,6 @@ spec:
           tcpSocket:
             port: 8123
           timeoutSeconds: 1
-        name: {{ kustom.name }}
         ports:
         - containerPort: 8123
           name: http
@@ -59,7 +51,7 @@ spec:
           timeoutSeconds: 1
         resources: {}
         securityContext:
-          runAsGroup: {{ kustom.runAsGroup }}
+          runAsUser: {{ kustom.security.runAsUser }}
         startupProbe:
           failureThreshold: 30
           periodSeconds: 5
@@ -78,7 +70,7 @@ spec:
         - -c
         - until pg_isready -h postgres.db -p 5432;do echo waiting for database; sleep
           2; done;
-        image: db/postgresql:17.5
+        image: "db/postgresql:{{ software['postgresql'].version }}"
         imagePullPolicy: IfNotPresent
         name: waitdb
         resources: {}

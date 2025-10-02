@@ -17,7 +17,7 @@ spec:
         - --host
         - 0.0.0.0
         - --port
-        - "28381"
+        - "{{ kustom.internal_port }}"
         - --reload
         command:
         - uvicorn
@@ -37,7 +37,7 @@ spec:
           timeoutSeconds: 3
         name: infopage
         ports:
-        - containerPort: 28381
+        - containerPort: {{ kustom.internal_port }}
           name: infopage
           protocol: TCP
         readinessProbe:
@@ -49,6 +49,8 @@ spec:
           periodSeconds: 30
           successThreshold: 1
           timeoutSeconds: 3
+        securityContext:
+          runAsUser: {{ kustom.security.runAsUser }}
         volumeMounts:
         - mountPath: /app
           name: infopage
