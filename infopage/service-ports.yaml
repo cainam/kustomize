@@ -6,4 +6,4 @@ spec:
   ports:
     - name: {{ kustom.name }}
       port: {{ kustom.network.svcPort }}
-      targetPort: {{ kustom.internal_port }}
+      targetPort: {{ kustom.name }}

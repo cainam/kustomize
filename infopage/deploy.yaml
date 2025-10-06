@@ -1,5 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
+{% set internal_port = 65536|random(1024) -%}
+{% set image_name = kustom.images.keys() | list | first -%}
+{% set image = kustom.images[image_name].section~'/'~image_name~':'~kustom.images[image_name].tag %}
 metadata:
   name: {{ kustom.name }}
 spec:
@@ -17,14 +20,14 @@ spec:
         - --host
         - 0.0.0.0
         - --port
-        - "{{ kustom.internal_port }}"
+        - "{{ internal_port }}"
         - --reload
         command:
         - uvicorn
         env:
         - name: PYTHONPATH
           value: /app/backend/:/py_env/lib/python3.13/site-packages/
-        image: {{ kustom.image }}
+        image: {{ image }}
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -37,7 +40,7 @@ spec:
           timeoutSeconds: 3
         name: infopage
         ports:
-        - containerPort: {{ kustom.internal_port }}
+        - containerPort: {{ internal_port }}
           name: infopage
           protocol: TCP
         readinessProbe:
