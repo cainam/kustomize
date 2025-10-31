@@ -10,7 +10,7 @@ data:
     email_domains = [ "*" ]        # Restrict to these E-Mail Domains, a wildcard "*" allows any email
     cookie_secret = "{{ cookie_secret }}"
     ssl_insecure_skip_verify = true
-    redirect_url = "https://{{base_domain }}{{ oauth2_path }}/callback"
+    redirect_url = "https://{{net.base_domain }}{{ oauth2_path }}/callback"
     cookie_domains = {{ '[' ~ domains | join(',') ~ ']' }}
     cookie_csrf_per_request = true
     whitelist_domains = {{ '[' ~ domains | join(',') ~ ']' }}

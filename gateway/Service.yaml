@@ -6,11 +6,8 @@ metadata:
     istio: {{ kustom.name }}
   name: {{ kustom.name }}
 spec:
-  allocateLoadBalancerNodePorts: true
   externalIPs:
-  - {{ kustom.network.endpointIP }}
-  externalTrafficPolicy: Cluster
-  internalTrafficPolicy: Cluster
+  - {{ (net.routes | selectattr('domain','equalto',kustom.network.domain)|first).endpointIP }}
   ports:
   - name: https
     port: 443
@@ -19,5 +16,4 @@ spec:
   selector:
     app: {{ kustom.name }}
     istio: {{ kustom.name }}
-  sessionAffinity: None
   type: LoadBalancer

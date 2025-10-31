@@ -34,4 +34,5 @@ webhooks:
         operator: NotIn
         values:
         - kube-system
+        - kube-flannel
         - kubext

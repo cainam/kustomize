@@ -5,7 +5,9 @@ metadata:
   labels:
     app: traefik
 spec:
-  type: LoadBalancer # This will provision a cloud load balancer
+  type: LoadBalancer
+  externalIPs:
+  - {{ (net.routes | selectattr('gateway','equalto',kustom.name)|first).endpointIP }}
   selector:
     app: traefik
   ports:

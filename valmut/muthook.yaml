@@ -42,3 +42,4 @@ webhooks:
         values:
         - kube-system
         - kubext
+        - kube-flannel
