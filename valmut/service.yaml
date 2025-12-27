@@ -7,4 +7,4 @@ spec:
     app: valmut
   ports:
     - port: 443
-      targetPort: 28382
+      targetPort: {{ kustom.network.podPort }}
