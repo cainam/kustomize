@@ -22,6 +22,8 @@ spec:
         command:
         - kopf
         env:
+        - name: USER
+          value: kopf
         - name: PYTHONPATH
           value: /app/backend/:/py_env/lib/python3.12/site-packages/
         - name: PATH
