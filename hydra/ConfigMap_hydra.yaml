@@ -5,9 +5,6 @@ metadata:
   labels:
     app.kubernetes.io/name: hydra
     app.kubernetes.io/instance: hydra
-    app.kubernetes.io/version: v25.4.0
-    app.kubernetes.io/managed-by: Helm
-    helm.sh/chart: hydra-0.60.0
 data:
   hydra.yaml: "log:\n  leak_sensitive_values: true\n  level: debug\noauth2:\n  allowed_top_level_claims:\n\
     \  - email\nserve:\n  admin:\n    port: 4445\n  cookies:\n    same_site_mode:\

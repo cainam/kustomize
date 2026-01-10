@@ -5,10 +5,6 @@ metadata:
   labels:
     app.kubernetes.io/name: hydra
     app.kubernetes.io/instance: hydra
-    app.kubernetes.io/version: v25.4.0
-    app.kubernetes.io/managed-by: Helm
-    helm.sh/chart: hydra-0.60.0
-  annotations: null
 spec:
   replicas: 1
   revisionHistoryLimit: 5
@@ -26,9 +22,6 @@ spec:
       labels:
         app.kubernetes.io/name: hydra
         app.kubernetes.io/instance: hydra
-        app.kubernetes.io/version: v25.4.0
-        app.kubernetes.io/managed-by: Helm
-        helm.sh/chart: hydra-0.60.0
       annotations:
         checksum/hydra-config: 5f99b551670581d60a0adc6e7313cb670b6add08fe4791efb517970dadc1b5b5
         checksum/hydra-secrets: d392f2f4f1aa87335ac96492479624c487fc4d164a90fd9adb439e343c17b14a
