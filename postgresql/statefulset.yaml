@@ -30,6 +30,7 @@ spec:
             su $(getent passwd {{ kustom.runAs }} | cut -d : -f 1) -c "pg_ctl start" || true
             su $(getent passwd {{ kustom.runAs }} | cut -d : -f 1) -c "psql -U postgres -c \"CREATE USER ${POSTGRES_USER} WITH PASSWORD '${POSTGRES_PASSWORD}';\"" || true
             su $(getent passwd {{ kustom.runAs }} | cut -d : -f 1) -c "psql -U postgres -c \"ALTER USER ${POSTGRES_USER} WITH SUPERUSER;\"" || true
+            su $(getent passwd {{ kustom.runAs }} | cut -d : -f 1) -c "pg_ctl stop" || true
         securityContext:
           runAsUser: 0
         env:
@@ -60,9 +61,14 @@ spec:
         - containerPort: 5432
         securityContext:
           runAsUser: {{ kustom.runAs }}
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - pg_ctl stop -m fast -D /var/lib/postgresql/data
         env:
-        - name: XXPOSTGRES_DB
-          value: mydb
         - name: PGDATA
           value: {{ kustom.dataPath }}/data
         - name: POSTGRES_USER
