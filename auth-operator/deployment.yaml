@@ -18,7 +18,7 @@ spec:
         - run
         - -n
         - auth
-        - /app/kopf.py
+        - /app/{{ kustom.name }}.py
         command:
         - kopf
         env:
@@ -47,11 +47,12 @@ spec:
         image: {{ kustom.image }}
         name: {{ kustom.name }}
         volumeMounts:
-        - mountPath: /app
+        - mountPath: /app/{{ kustom.name }}.py
           name: {{ kustom.name }}
+          subPath: {{ kustom.name }}.py
       serviceAccount: {{ kustom.name }}
       serviceAccountName: {{ kustom.name }}
       volumes:
       - name: {{ kustom.name }}
-        persistentVolumeClaim:
+        configMap:
           claimName: {{ kustom.name }}
