@@ -1,7 +1,22 @@
+namespace: {{ kustom.namespace }}
 resources:
   - configmap.yaml
-  - deployment.yaml
+  - statefulset.yaml
   - service.yaml
-  - persistentvolumeclaim.yaml
 
-namespace: {{ kustom.namespace }}
+secretGenerator:
+  - name: {{ kustom.name }}
+    literals:
+      - mosquitto.passwd={{ mosquitto_passwd }}
+
+replacements:
+  - source: # replace generated name by the one used in the Deployment
+      kind: Secret
+      name: {{ kustom.name }}
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: Deployment
+          name: {{ kustom.name }}
+        fieldPaths:
+        - spec.template.spec.volumes.[name=config].projected.sources.1.secret.name
