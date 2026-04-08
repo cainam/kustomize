@@ -57,4 +57,4 @@ devices:
     friendly_name: Büro-Ausgang
   '0x70b3d52b60076b69':
     friendly_name: Fritz
-version: 4
+version: 5

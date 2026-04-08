@@ -17,4 +17,5 @@ spec:
     - X-Auth-Request-Email
     - Set-Cookie
     trustForwardHeader: true
+    maxResponseBodySize: 1048576  # Limit in bytes (e.g., 1MB)
 

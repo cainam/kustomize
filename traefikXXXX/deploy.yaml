@@ -1,4 +1,4 @@
-# kustomize/base/traefik-deployment.yaml
+{% set container_port = 65536|random(1024) -%}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,36 +16,37 @@ spec:
         app: traefik
     spec:
       serviceAccountName: traefik-ingress-controller
-      volumes:
-      - name: traefik-plugins
-        persistentVolumeClaim:
-          claimName: traefik-plugins
+      #volumes:
+      #- name: traefik-plugins
+      #  persistentVolumeClaim:
+      #    claimName: traefik-plugins
       containers:
         - name: traefik
           image: {{ kustom.image }}
           command: ['/bin/traefik']
           args:
             - --api.dashboard=true
+            - --api.basepath=/traefik-board
             - --ping=true
             - --ping.entrypoint=traefik
             - --providers.kubernetesingress
             - --providers.kubernetesingress.ingressclass=traefik
-            #- --providers.kubernetesingress.labelselector=app=my-app-ingress
-            #- --providers.kubernetesingress.allowCrossNamespace=true
-            - --experimental.localPlugins.rewriteResponse.moduleName=traefik-plugin-rewrite-response-headers
+            - --experimental.localPlugins.rewriteResponse.moduleName=github.com/jamesmcroft/traefik-plugin-rewrite-response-headers
             - --providers.kubernetescrd
             - --providers.kubernetescrd.allowCrossNamespace=true
             - --entrypoints.web.address=:9980
             - --entrypoints.websecure.address=:9443
-            - --entrypoints.traefik.address=:{{ kustom.ports.traefik }}
+            - --entrypoints.traefik.address=:{{ container_port }}
             - --log.level=INFO
+            - --global.checknewversion=false
+            - --global.sendanonymoususage=false
           ports:
             - name: web
               containerPort: 9980
             - name: websecure
               containerPort: 9443
             - name: traefik
-              containerPort: {{ kustom.ports.traefik }}
+              containerPort: {{ container_port }}
             - name: metrics
               containerPort: 8082 # For Prometheus metrics
           resources:
@@ -58,12 +59,9 @@ spec:
           readinessProbe:
             httpGet:
               path: /ping
-              port: {{ kustom.ports.traefik }}
+              port: {{ container_port }}
           livenessProbe:
             httpGet:
               path: /ping
-              port: {{ kustom.ports.traefik }}
-          volumeMounts:
-          - mountPath: /plugins-local/src
-            name: traefik-plugins
+              port: {{ container_port }}
 

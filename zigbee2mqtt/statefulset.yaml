@@ -22,7 +22,7 @@ spec:
         - name: ZIGBEE2MQTT_DATA
           value: "/data"
         args:
-        - sleep 5; rm -f /data/configuration.yaml; ln -s /config/configuration.yaml /data/configuration.yaml; node index.js
+        - sleep 5; rm -f /data/configuration.yaml; cp -vp /config/configuration.yaml /data/configuration.yaml; node index.js
         command:
         - /bin/sh
         - -c

@@ -29,19 +29,19 @@ data:
     istiod\",\n    \"priorityClassName\": \"\",\n    \"proxy\": {\n      \"autoInject\"\
     : \"enabled\",\n      \"clusterDomain\": \"cluster.local\",\n      \"componentLogLevel\"\
     : \"misc:error\",\n      \"excludeIPRanges\": \"\",\n      \"excludeInboundPorts\"\
-    : \"\",\n      \"excludeOutboundPorts\": \"\",\n      \"image\": \"istio-system/proxyv2:1.25.1\"\
+    : \"\",\n      \"excludeOutboundPorts\": \"\",\n      \"image\": \"istio-system/proxyv2:{% endraw %}{{ software.istio.version }}{% raw %}\"\
     ,\n      \"includeIPRanges\": \"*\",\n      \"includeInboundPorts\": \"*\",\n\
     \      \"includeOutboundPorts\": \"\",\n      \"logLevel\": \"warning\",\n   \
     \   \"outlierLogPath\": \"\",\n      \"privileged\": false,\n      \"readinessFailureThreshold\"\
     : 4,\n      \"readinessInitialDelaySeconds\": 0,\n      \"readinessPeriodSeconds\"\
-    : 15,\n      \"registry\": \"myregistry.adm13:443\",\n      \"resources\": {\n\
+    : 15,\n      \"registry\": \"{% endraw %}{{ registry }}{% raw %}\",\n      \"resources\": {\n\
     \        \"limits\": {\n          \"cpu\": \"2000m\",\n          \"memory\": \"\
     1024Mi\"\n        },\n        \"requests\": {\n          \"cpu\": \"100m\",\n\
     \          \"memory\": \"128Mi\"\n        }\n      },\n      \"startupProbe\"\
     : {\n        \"enabled\": true,\n        \"failureThreshold\": 600\n      },\n\
     \      \"statusPort\": 15020,\n      \"tracer\": \"none\"\n    },\n    \"proxy_init\"\
-    : {\n      \"forceApplyIptables\": false,\n      \"image\": \"istio-system/proxyv2:1.25.1\"\
-    ,\n      \"registry\": \"myregistry.adm13:443\"\n    },\n    \"remotePilotAddress\"\
+    : {\n      \"forceApplyIptables\": false,\n      \"image\": \"istio-system/proxyv2:{% endraw %}{{ software.istio.version }}{% raw %}\"\
+    ,\n      \"registry\": \"{{ registry }}\"\n    },\n    \"remotePilotAddress\"\
     : \"\",\n    \"sds\": {\n      \"token\": {\n        \"aud\": \"istio-ca\"\n \
     \     }\n    },\n    \"sts\": {\n      \"servicePort\": 0\n    },\n    \"tag\"\
     : \"latest\",\n    \"variant\": \"\",\n    \"waypoint\": {\n      \"affinity\"\

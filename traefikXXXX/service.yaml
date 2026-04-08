@@ -21,7 +21,7 @@ spec:
       targetPort: websecure
     - protocol: TCP
       name: traefik-api
-      port: {{ kustom.ports.traefik }}
+      port: {{ kustom.network.svcPort }}
       targetPort: traefik # For the dashboard/API
     - protocol: TCP
       name: metrics

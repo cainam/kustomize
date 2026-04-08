@@ -39,6 +39,12 @@ rules:
       - watch
       - list
       - delete
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["nodes", "pods"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "watch", "list"]
   - apiGroups:
       - ''
     resources:

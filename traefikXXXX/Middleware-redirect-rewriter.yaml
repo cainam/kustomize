@@ -8,4 +8,4 @@ spec:
       rewrites:
       - header: location
         regex: ^https?://[^/]+/(hydra|idp)(.*)$
-        replacement: https://adm13.dnshome.de:44354/$1$2
+        replacement: https://{{ net.domain_external }}:44354/$1$2
